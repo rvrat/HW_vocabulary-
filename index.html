@@ -1,17 +1,30 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAT Vocabulary Trainer</title>
+<title>Homework Vocabulary Trainer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
+/* ============ ПЕРЕМЕННЫЕ ТЕМЫ ============ */
 :root{
-  --bg:#12141a; --bg-grain:#161923; --surface:#1c2029; --surface-2:#242936;
-  --border:#2b3040; --border-soft:#232733; --text:#eef0f5; --text-dim:#9aa1b2;
-  --text-faint:#5b6274; --gold:#e0b04a; --gold-dim:#8a7130;
-  --good:#4ade80; --good-dim:#1e3a2a; --bad:#f87171; --bad-dim:#3a1e20;
+  --bg:#12141a;
+  --bg-grain:#161923;
+  --surface:#1c2029;
+  --surface-2:#242936;
+  --border:#2b3040;
+  --border-soft:#232733;
+  --text:#eef0f5;
+  --text-dim:#9aa1b2;
+  --text-faint:#5b6274;
+  --gold:#e0b04a;
+  --gold-dim:#8a7130;
+  --good:#4ade80;
+  --good-dim:#1e3a2a;
+  --bad:#f87171;
+  --bad-dim:#3a1e20;
   --shadow: 0 20px 60px -20px rgba(0,0,0,.6);
   --card-radius: 6px;
   --font-display: 'Fraunces', Georgia, serif;
@@ -19,49 +32,93 @@
   --font-mono: 'JetBrains Mono', monospace;
 }
 [data-theme="light"]{
-  --bg:#f4f1ea; --bg-grain:#efece3; --surface:#ffffff; --surface-2:#faf8f3;
-  --border:#e0dccf; --border-soft:#e8e4d8; --text:#242219; --text-dim:#6b6558;
-  --text-faint:#a39c8a; --gold:#a97a1e; --gold-dim:#c99a3e;
-  --good:#1f9d55; --good-dim:#dcf3e5; --bad:#d63a3a; --bad-dim:#fbe2e2;
+  --bg:#f4f1ea;
+  --bg-grain:#efece3;
+  --surface:#ffffff;
+  --surface-2:#faf8f3;
+  --border:#e0dccf;
+  --border-soft:#e8e4d8;
+  --text:#242219;
+  --text-dim:#6b6558;
+  --text-faint:#a39c8a;
+  --gold:#a97a1e;
+  --gold-dim:#c99a3e;
+  --good:#1f9d55;
+  --good-dim:#dcf3e5;
+  --bad:#d63a3a;
+  --bad-dim:#fbe2e2;
   --shadow: 0 20px 50px -25px rgba(60,50,20,.35);
 }
+
 *{box-sizing:border-box; margin:0; padding:0;}
 html,body{height:100%;}
 body{
-  background: radial-gradient(ellipse 900px 500px at 50% -10%, var(--bg-grain), transparent), var(--bg);
-  color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden;
+  background:
+    radial-gradient(ellipse 900px 500px at 50% -10%, var(--bg-grain), transparent),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  min-height:100vh;
+  overflow-x:hidden;
   transition:background .35s ease, color .35s ease;
 }
+
+/* ============ ВЕРХНЯЯ ПАНЕЛЬ ============ */
 .topbar{
-  display:flex; align-items:center; gap:18px; padding:16px 24px;
+  display:flex; align-items:center; gap:18px;
+  padding:16px 24px;
   border-bottom:1px solid var(--border-soft);
   background:color-mix(in srgb, var(--surface) 60%, transparent);
-  backdrop-filter:blur(10px); position:sticky; top:0; z-index:30; flex-wrap:wrap;
+  backdrop-filter:blur(10px);
+  position:sticky; top:0; z-index:30;
+  flex-wrap:wrap;
 }
-.brand{ display:flex; align-items:baseline; gap:8px; font-family:var(--font-display); font-weight:600; font-size:20px; letter-spacing:.2px; white-space:nowrap;}
-.brand .mark{ font-size:12px; font-family:var(--font-mono); color:var(--gold); border:1px solid var(--gold-dim); border-radius:3px; padding:2px 5px; letter-spacing:1px;}
+.brand{
+  display:flex; align-items:baseline; gap:8px;
+  font-family:var(--font-display);
+  font-weight:600; font-size:20px; letter-spacing:.2px;
+  white-space:nowrap;
+}
+.brand .mark{
+  font-size:12px; font-family:var(--font-mono); color:var(--gold);
+  border:1px solid var(--gold-dim); border-radius:3px; padding:2px 5px;
+  letter-spacing:1px;
+}
 .topbar-spacer{flex:1;}
 .block-select-wrap{position:relative;}
 select#blockSelect{
   appearance:none; -webkit-appearance:none;
-  background:var(--surface-2); color:var(--text); border:1px solid var(--border); border-radius:5px;
+  background:var(--surface-2); color:var(--text);
+  border:1px solid var(--border); border-radius:5px;
   padding:9px 34px 9px 12px; font-family:var(--font-body); font-size:13.5px; font-weight:500;
   cursor:pointer; min-width:230px;
 }
-.block-select-wrap::after{ content:"▾"; position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--text-dim); pointer-events:none; font-size:11px;}
-.overall-progress{ display:flex; flex-direction:column; gap:4px; min-width:170px;}
+.block-select-wrap::after{
+  content:"▾"; position:absolute; right:12px; top:50%; transform:translateY(-50%);
+  color:var(--text-dim); pointer-events:none; font-size:11px;
+}
+.overall-progress{
+  display:flex; flex-direction:column; gap:4px; min-width:170px;
+}
 .overall-progress .label{font-size:11px; color:var(--text-faint); font-family:var(--font-mono); letter-spacing:.5px; text-transform:uppercase;}
 .overall-progress .bar{height:5px; background:var(--surface-2); border-radius:3px; overflow:hidden; border:1px solid var(--border-soft);}
 .overall-progress .bar-fill{height:100%; background:linear-gradient(90deg, var(--gold-dim), var(--gold)); transition:width .5s ease;}
 .overall-progress .num{font-size:12px; color:var(--text-dim); font-family:var(--font-mono);}
+
 .icon-btn{
-  width:38px; height:38px; border-radius:50%; border:1px solid var(--border);
-  background:var(--surface-2); color:var(--text);
+  width:38px; height:38px; border-radius:50%;
+  border:1px solid var(--border); background:var(--surface-2); color:var(--text);
   display:flex; align-items:center; justify-content:center;
   cursor:pointer; font-size:16px; transition:all .2s ease; flex-shrink:0;
 }
 .icon-btn:hover{border-color:var(--gold); color:var(--gold); transform:translateY(-1px);}
-.main{ display:flex; flex-direction:column; align-items:center; padding:48px 20px 80px; min-height:calc(100vh - 72px);}
+
+/* ============ ГЛАВНАЯ ОБЛАСТЬ ============ */
+.main{
+  display:flex; flex-direction:column; align-items:center;
+  padding:48px 20px 80px;
+  min-height:calc(100vh - 72px);
+}
 .round-indicator{
   font-family:var(--font-mono); font-size:12px; letter-spacing:1.5px;
   color:var(--text-faint); text-transform:uppercase; margin-bottom:22px;
@@ -71,6 +128,8 @@ select#blockSelect{
 .round-indicator .dotline span{width:5px; height:5px; border-radius:50%; background:var(--border);}
 .round-indicator .dotline span.done{background:var(--gold);}
 .round-indicator .dotline span.current{background:var(--text); box-shadow:0 0 0 3px color-mix(in srgb, var(--gold) 25%, transparent);}
+
+/* --- Стопка карточек (эффект колоды) --- */
 .card-stack{ position:relative; width:100%; max-width:520px; }
 .card-stack::before, .card-stack::after{
   content:""; position:absolute; left:50%; border-radius:var(--card-radius);
@@ -78,22 +137,37 @@ select#blockSelect{
 }
 .card-stack::before{ width:94%; height:100%; top:10px; transform:translateX(-50%); opacity:.55; z-index:1;}
 .card-stack::after{ width:88%; height:100%; top:20px; transform:translateX(-50%); opacity:.3; z-index:0;}
+
 .word-card{
-  position:relative; z-index:2; background:var(--surface); border:1px solid var(--border);
-  border-radius:var(--card-radius); box-shadow:var(--shadow);
-  padding:38px 34px 30px; min-height:300px;
+  position:relative; z-index:2;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--card-radius);
+  box-shadow:var(--shadow);
+  padding:38px 34px 30px;
+  min-height:300px;
   display:flex; flex-direction:column; align-items:center; text-align:center;
   animation:cardIn .38s cubic-bezier(.2,.9,.25,1);
 }
-.word-card::before{
+.word-card::before{ /* перфорация как у карточки каталога */
   content:""; position:absolute; top:0; left:24px; right:24px; height:1px;
   background-image:radial-gradient(circle, var(--border) 1.4px, transparent 1.5px);
-  background-size:10px 1px; background-repeat:repeat-x; opacity:.8;
+  background-size:10px 1px; background-repeat:repeat-x;
+  opacity:.8;
 }
-@keyframes cardIn{ from{opacity:0; transform:translateY(10px) scale(.98);} to{opacity:1; transform:translateY(0) scale(1);} }
-.card-tag{ font-family:var(--font-mono); font-size:11px; color:var(--text-faint); letter-spacing:1px; text-transform:uppercase; margin-bottom:22px;}
+@keyframes cardIn{
+  from{opacity:0; transform:translateY(10px) scale(.98);}
+  to{opacity:1; transform:translateY(0) scale(1);}
+}
+.card-tag{
+  font-family:var(--font-mono); font-size:11px; color:var(--text-faint);
+  letter-spacing:1px; text-transform:uppercase; margin-bottom:22px;
+}
 .card-tag b{color:var(--gold-dim); font-weight:600;}
-.word-en{ font-family:var(--font-display); font-weight:600; font-size:clamp(28px,4.2vw,42px); line-height:1.15; letter-spacing:.2px;}
+.word-en{
+  font-family:var(--font-display); font-weight:600; font-size:clamp(28px,4.2vw,42px);
+  line-height:1.15; letter-spacing:.2px;
+}
 .word-translation{
   margin-top:16px; font-size:17px; color:var(--gold);
   font-family:var(--font-display); font-style:italic; font-weight:500;
@@ -101,32 +175,61 @@ select#blockSelect{
   transition:opacity .25s ease, transform .25s ease;
 }
 .word-translation.visible{opacity:1; transform:translateY(0);}
-.word-example{ margin-top:10px; font-size:13.5px; color:var(--text-dim); max-width:380px; line-height:1.5; opacity:0; height:0; overflow:hidden; transition:opacity .25s ease;}
+.word-example{
+  margin-top:10px; font-size:13.5px; color:var(--text-dim);
+  max-width:380px; line-height:1.5; opacity:0; height:0; overflow:hidden;
+  transition:opacity .25s ease;
+}
 .word-example.visible{opacity:1; height:auto; margin-top:12px;}
+
+/* --- Цепочка истории ("chain of pearls") --- */
 .history-wrap{ margin-top:28px; display:flex; flex-direction:column; align-items:center; gap:9px;}
 .history-dots{ position:relative; display:flex; gap:14px; align-items:center; }
-.history-dots::before{ content:""; position:absolute; left:5px; right:5px; top:50%; height:1px; background:var(--border); transform:translateY(-50%); z-index:0;}
-.hdot{ width:11px; height:11px; border-radius:50%; position:relative; z-index:1; background:var(--surface-2); border:1.5px solid var(--border); transition:all .2s ease;}
+.history-dots::before{
+  content:""; position:absolute; left:5px; right:5px; top:50%; height:1px;
+  background:var(--border); transform:translateY(-50%); z-index:0;
+}
+.hdot{
+  width:11px; height:11px; border-radius:50%; position:relative; z-index:1;
+  background:var(--surface-2); border:1.5px solid var(--border);
+  transition:all .2s ease;
+}
 .hdot.know{ background:var(--good); border-color:var(--good); box-shadow:0 0 10px -2px var(--good);}
 .hdot.dontknow{ background:var(--bad); border-color:var(--bad); box-shadow:0 0 10px -2px var(--bad);}
 .progress-text{ font-family:var(--font-mono); font-size:12px; color:var(--text-faint); letter-spacing:.5px;}
+
+/* ============ КНОПКИ ============ */
 .controls{ width:100%; max-width:520px; margin-top:26px; display:flex; flex-direction:column; gap:12px; align-items:center;}
-.btn{ font-family:var(--font-body); font-weight:600; font-size:14.5px; padding:13px 24px; border-radius:5px; border:1px solid transparent; cursor:pointer; transition:all .18s ease; letter-spacing:.2px;}
+.btn{
+  font-family:var(--font-body); font-weight:600; font-size:14.5px;
+  padding:13px 24px; border-radius:5px; border:1px solid transparent;
+  cursor:pointer; transition:all .18s ease; letter-spacing:.2px;
+}
 .btn:disabled{opacity:.35; cursor:not-allowed;}
-.btn-ghost{ background:transparent; border-color:var(--border); color:var(--text-dim);}
+.btn-ghost{
+  background:transparent; border-color:var(--border); color:var(--text-dim);
+}
 .btn-ghost:hover:not(:disabled){ border-color:var(--gold); color:var(--gold);}
-.btn-primary{ background:var(--gold); color:#171308; border-color:var(--gold);}
+.btn-primary{
+  background:var(--gold); color:#171308; border-color:var(--gold);
+}
 .btn-primary:hover:not(:disabled){ filter:brightness(1.08); transform:translateY(-1px);}
 .answer-row{ display:flex; gap:12px; width:100%; }
-.btn-know, .btn-dontknow{ flex:1; padding:15px; font-size:15px; border-radius:6px; font-weight:700; display:flex; align-items:center; justify-content:center; gap:8px;}
+.btn-know, .btn-dontknow{
+  flex:1; padding:15px; font-size:15px; border-radius:6px; font-weight:700;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+}
 .btn-know{ background:var(--good-dim); color:var(--good); border:1px solid var(--good);}
 .btn-know:hover{ background:var(--good); color:#0b2015; }
 .btn-dontknow{ background:var(--bad-dim); color:var(--bad); border:1px solid var(--bad);}
 .btn-dontknow:hover{ background:var(--bad); color:#2a0b0b; }
 [data-theme="light"] .btn-know:hover{ color:#fff; }
 [data-theme="light"] .btn-dontknow:hover{ color:#fff; }
+
 .start-round-area{ margin-top:34px; text-align:center; }
 .start-round-area p{ color:var(--text-faint); font-size:13px; margin-top:10px; }
+
+/* --- Экран завершения раунда --- */
 .round-summary{
   background:var(--surface); border:1px solid var(--border); border-radius:var(--card-radius);
   padding:40px 34px; text-align:center; max-width:460px; width:100%;
@@ -140,37 +243,55 @@ select#blockSelect{
 .summary-stat.good .n{ color:var(--good);}
 .summary-stat.bad .n{ color:var(--bad);}
 .summary-stat .l{ font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.6px;}
+
 .empty-state{ text-align:center; max-width:420px; color:var(--text-dim); }
 .empty-state .big{ font-size:44px; margin-bottom:14px; }
 .empty-state h3{ font-family:var(--font-display); font-size:22px; color:var(--text); margin-bottom:8px; }
-.overlay{ position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:40; opacity:0; pointer-events:none; transition:opacity .3s ease;}
+
+/* ============ БОКОВАЯ ПАНЕЛЬ ============ */
+.overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:40;
+  opacity:0; pointer-events:none; transition:opacity .3s ease;
+}
 .overlay.open{ opacity:1; pointer-events:auto; }
 .sidebar{
   position:fixed; top:0; right:0; height:100vh; width:380px; max-width:92vw;
-  background:var(--surface); border-left:1px solid var(--border); z-index:50;
-  transform:translateX(100%); transition:transform .32s cubic-bezier(.2,.9,.25,1);
+  background:var(--surface); border-left:1px solid var(--border);
+  z-index:50; transform:translateX(100%); transition:transform .32s cubic-bezier(.2,.9,.25,1);
   overflow-y:auto; padding:22px 22px 60px;
 }
 .sidebar.open{ transform:translateX(0); }
 .sidebar h2{ font-family:var(--font-display); font-size:20px; margin-bottom:18px; display:flex; justify-content:space-between; align-items:center;}
 .sidebar-section{ margin-bottom:30px; }
-.sidebar-section h3{ font-family:var(--font-mono); font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--text-faint); margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--border-soft);}
-.block-row{ display:flex; flex-direction:column; gap:6px; padding:10px 12px; border-radius:5px; border:1px solid var(--border-soft); margin-bottom:8px; cursor:pointer; transition:border-color .2s ease;}
+.sidebar-section h3{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:1px; text-transform:uppercase;
+  color:var(--text-faint); margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--border-soft);
+}
+.block-row{
+  display:flex; flex-direction:column; gap:6px; padding:10px 12px; border-radius:5px;
+  border:1px solid var(--border-soft); margin-bottom:8px; cursor:pointer; transition:border-color .2s ease;
+}
 .block-row:hover{ border-color:var(--gold-dim); }
 .block-row.active{ border-color:var(--gold); background:var(--surface-2); }
-.block-row-top{ display:flex; justify-content:space-between; font-size:13px; font-weight:600; gap:8px;}
-.block-row-top .status{ font-size:11px; color:var(--good); white-space:nowrap;}
+.block-row-top{ display:flex; justify-content:space-between; font-size:13px; font-weight:600; }
+.block-row-top .status{ font-size:11px; color:var(--good); }
 .block-bar{ height:4px; background:var(--surface-2); border-radius:2px; overflow:hidden; }
 .block-bar-fill{ height:100%; background:var(--gold); }
+
 .field{ display:flex; flex-direction:column; gap:5px; margin-bottom:12px; }
 .field label{ font-size:11.5px; color:var(--text-faint); font-weight:600; }
-.field input, .field textarea, .field select{ background:var(--bg); border:1px solid var(--border); border-radius:4px; color:var(--text); padding:9px 10px; font-size:13.5px; font-family:var(--font-body); resize:vertical;}
+.field input, .field textarea, .field select{
+  background:var(--bg); border:1px solid var(--border); border-radius:4px; color:var(--text);
+  padding:9px 10px; font-size:13.5px; font-family:var(--font-body); resize:vertical;
+}
 .slider-row{ display:flex; align-items:center; gap:10px; }
 .slider-row input[type=range]{ flex:1; accent-color:var(--gold); }
 .slider-val{ font-family:var(--font-mono); font-size:13px; width:24px; text-align:center; }
+
 .btn-block{ width:100%; margin-bottom:8px; text-align:center; }
 .btn-danger{ color:var(--bad); border-color:var(--bad-dim); }
 .btn-danger:hover{ border-color:var(--bad); background:var(--bad-dim); }
+
 .toast{
   position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px);
   background:var(--surface-2); border:1px solid var(--border); color:var(--text);
@@ -178,13 +299,22 @@ select#blockSelect{
   opacity:0; pointer-events:none; transition:all .3s ease; box-shadow:var(--shadow);
 }
 .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
-.modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:60; display:none; align-items:center; justify-content:center; padding:20px;}
+
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:60;
+  display:none; align-items:center; justify-content:center; padding:20px;
+}
 .modal-overlay.open{ display:flex; }
-.modal{ background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:26px; max-width:420px; width:100%; box-shadow:var(--shadow);}
+.modal{
+  background:var(--surface); border:1px solid var(--border); border-radius:8px;
+  padding:26px; max-width:420px; width:100%; box-shadow:var(--shadow);
+}
 .modal h3{ font-family:var(--font-display); font-size:19px; margin-bottom:16px; }
 .modal-actions{ display:flex; gap:10px; margin-top:16px; }
 .modal-actions .btn{ flex:1; }
+
 #confettiCanvas{ position:fixed; inset:0; pointer-events:none; z-index:200; }
+
 @media(max-width:640px){
   .topbar{ padding:12px 14px; gap:10px; }
   .overall-progress{ display:none; }
@@ -197,8 +327,9 @@ select#blockSelect{
 
 <canvas id="confettiCanvas"></canvas>
 
+<!-- ============ ВЕРХНЯЯ ПАНЕЛЬ ============ -->
 <header class="topbar">
-  <div class="brand">📚 SAT Vocabulary <span class="mark">TRAINER</span></div>
+  <div class="brand">📓 Homework Vocabulary <span class="mark">TRAINER</span></div>
   <div class="topbar-spacer"></div>
   <div class="block-select-wrap">
     <select id="blockSelect"></select>
@@ -212,19 +343,24 @@ select#blockSelect{
   <button class="icon-btn" id="sidebarToggle" title="Меню блоков">☰</button>
 </header>
 
+<!-- ============ ГЛАВНАЯ ОБЛАСТЬ ============ -->
 <main class="main" id="mainArea"></main>
 
+<!-- ============ БОКОВАЯ ПАНЕЛЬ ============ -->
 <div class="overlay" id="overlay"></div>
 <aside class="sidebar" id="sidebar">
   <h2>Блоки <button class="icon-btn" id="sidebarClose" style="width:30px;height:30px;font-size:14px;">✕</button></h2>
+
   <div class="sidebar-section">
     <h3>Прогресс по блокам</h3>
     <div id="blockList"></div>
   </div>
+
   <div class="sidebar-section">
     <h3>Повторение</h3>
     <button class="btn btn-ghost btn-block" id="globalReviewBtn">🔁 Повторить все выученные слова</button>
   </div>
+
   <div class="sidebar-section">
     <h3>Настройки раунда</h3>
     <div class="field">
@@ -234,17 +370,20 @@ select#blockSelect{
       </div>
     </div>
   </div>
+
   <div class="sidebar-section">
     <h3>Управление словами</h3>
     <button class="btn btn-ghost btn-block" id="openAddWord">➕ Добавить слово</button>
     <button class="btn btn-ghost btn-block" id="openBulkAdd">📋 Добавить список слов</button>
   </div>
+
   <div class="sidebar-section">
     <h3>Данные</h3>
     <button class="btn btn-ghost btn-block" id="exportBtn">⬇️ Экспорт данных (JSON)</button>
     <button class="btn btn-ghost btn-block" id="importBtn">⬆️ Импорт данных</button>
     <input type="file" id="importFile" accept="application/json" style="display:none;">
   </div>
+
   <div class="sidebar-section">
     <h3>Сброс прогресса</h3>
     <button class="btn btn-ghost btn-danger btn-block" id="resetBlockBtn">↺ Сбросить прогресс текущего блока</button>
@@ -252,13 +391,26 @@ select#blockSelect{
   </div>
 </aside>
 
+<!-- ============ МОДАЛКА "ДОБАВИТЬ СЛОВО" ============ -->
 <div class="modal-overlay" id="addWordModal">
   <div class="modal">
     <h3>Добавить слово</h3>
-    <div class="field"><label>Блок</label><select id="newWordBlock"></select></div>
-    <div class="field"><label>Английское слово / фраза</label><input type="text" id="newWordEn" placeholder="напр. resilient"></div>
-    <div class="field"><label>Перевод</label><input type="text" id="newWordTr" placeholder="напр. стойкий"></div>
-    <div class="field"><label>Пример (необязательно)</label><textarea id="newWordEx" rows="2"></textarea></div>
+    <div class="field">
+      <label>Блок</label>
+      <select id="newWordBlock"></select>
+    </div>
+    <div class="field">
+      <label>Английское слово / фраза</label>
+      <input type="text" id="newWordEn" placeholder="напр. resilient">
+    </div>
+    <div class="field">
+      <label>Перевод</label>
+      <input type="text" id="newWordTr" placeholder="напр. стойкий, жизнестойкий">
+    </div>
+    <div class="field">
+      <label>Пример (необязательно)</label>
+      <textarea id="newWordEx" rows="2" placeholder="Пример предложения..."></textarea>
+    </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" id="cancelAddWord">Отмена</button>
       <button class="btn btn-primary" id="confirmAddWord">Добавить</button>
@@ -266,13 +418,17 @@ select#blockSelect{
   </div>
 </div>
 
+<!-- ============ МОДАЛКА "ДОБАВИТЬ СПИСОК СЛОВ" ============ -->
 <div class="modal-overlay" id="bulkAddModal">
   <div class="modal">
     <h3>Добавить список слов</h3>
-    <div class="field"><label>Блок</label><select id="bulkWordBlock"></select></div>
+    <div class="field">
+      <label>Блок</label>
+      <select id="bulkWordBlock"></select>
+    </div>
     <div class="field">
       <label>Список (по одному слову на строку, формат: слово - перевод)</label>
-      <textarea id="bulkWordsText" rows="8" placeholder="cat - кошка&#10;dog - собака"></textarea>
+      <textarea id="bulkWordsText" rows="8" placeholder="cat - кошка&#10;dog - собака&#10;resilient - устойчивый, стойкий"></textarea>
     </div>
     <div id="bulkPreview" style="font-size:12.5px; color:var(--text-faint); margin-top:-4px; margin-bottom:8px;"></div>
     <div class="modal-actions">
@@ -286,308 +442,46 @@ select#blockSelect{
 
 <script>
 /* =========================================================================
-   SAT VOCABULARY TRAINER
+   HOMEWORK VOCABULARY TRAINER
+   Полностью автономное веб-приложение на чистом JS.
    ========================================================================= */
 
-/* ---------- 0. ИМЕНА БЛОКОВ ---------- */
-const BLOCK_NAMES = {
-  22: "Математика",
-  23: "Новые слова",
-  24: "Доп. слова 21",
-  25: "Новые слова ч.2",
-  26: "Связки и переходы",
-  27: "Новые слова ч.3"
-};
-
-/* ---------- 1. ИСХОДНЫЕ ДАННЫЕ ---------- */
+/* ---------- 1. ИСХОДНЫЕ ДАННЫЕ: 18 блоков, 359 слов ---------- */
+// Формат: [номер блока, английское слово, перевод]
 const WORDS_RAW = [
-/* ===== БЛОК 1 (20) ===== */
-[1,"participation","участие"],[1,"convoluted","запутанный, сложный"],[1,"tale","история, рассказ"],
-[1,"erode","подрывать, разрушать"],[1,"ethics","этика, нравственные принципы"],[1,"constellation","совокупность, группа"],
-[1,"associate","соратник, коллега"],[1,"security operative","сотрудник службы безопасности"],[1,"attorney general","генеральный прокурор"],
-[1,"legacy","наследие"],[1,"praise","хвалить"],[1,"affirm","подтверждать, утверждать"],
-[1,"sovereignty","суверенитет"],[1,"tribal nation","племенное государство"],[1,"attempt","попытка"],
-[1,"reform","реформировать"],[1,"health care policy","политика здравоохранения"],[1,"arguably","возможно, можно утверждать"],
-[1,"precursor","предшественник"],[1,"Affordable Care Act","Закон о доступном медицинском обслуживании"],
+[1,"accomplish feats","совершать подвиги / достигать выдающихся результатов"],[1,"aid worker","сотрудник гуманитарной организации (помощи)"],[1,"applicant","соискатель / претендент (на должность)"],
+[1,"aspiration","стремление / цель / мечта"],[1,"authentic","настоящий / подлинный (не подделка)"],[1,"beam","передавать сигнал / транслировать (по телевидению)"],
+[1,"become financially independent","стать финансово независимым (не зависеть от родителей)"],[1,"break into the job market","пробиться на рынок труда (устроиться, несмотря на отсутствие опыта)"],[1,"build up","наращивать / укреплять (силу, мышцы)"],
+[1,"cause trouble","доставлять проблемы / создавать неприятности"],[1,"climb the first rung on the career ladder","подняться на первую ступень карьерной лестницы"],[1,"cover expenses","покрывать расходы (оплачивать)"],
+[1,"curate","курировать / отбирать и систематизировать (контент, новости)"],[1,"doodle","каракули / небрежный рисунок (на полях)"],[1,"dry up","иссякать / заканчиваться (о деньгах, ресурсах)"],
+[1,"elaborate","давать подробности / распространяться (на тему)"],[1,"embark on a career / course / project / venture","начать карьеру / курс / проект / предприятие"],[1,"end up","в итоге оказаться / закончить тем, что..."],
+[1,"experience a setback / a shock / a situation / a surprise / adversity / an obstacle / change / fear / pain / problems / resistance","испытать неудачу / шок / ситуацию / сюрприз / трудности / препятствие / перемены / страх / боль / проблемы / сопротивление"],[1,"extrinsic","внешний (о мотивации — деньги, признание)"],
 
-/* ===== БЛОК 2 (20) ===== */
-[2,"administration","администрация"],[2,"accomplishment","свершение, достижение"],[2,"perceive","воспринимать"],
-[2,"perception","восприятие"],[2,"common","часто встречающийся"],[2,"evidence","свидетельство, доказательство"],
-[2,"evident","очевидный"],[2,"tribe","племя"],[2,"operate","управлять, руководить"],
-[2,"rely on","полагаться на"],[2,"guide","направлять"],[2,"design","проектирование, дизайн"],
-[2,"exhibit","экспонат, выставка"],[2,"citizen","гражданин, член общины"],[2,"employ","использовать, применять"],
-[2,"Indigenous-led","управляемый коренными народами"],[2,"anticipate","ориентироваться, предполагать"],[2,"audience","аудитория"],
-[2,"Eurocentric","евроцентричный"],[2,"approach","подход"],
+[2,"fall by the wayside","остаться в стороне / не выдержать конкуренции (о бизнесе)"],[2,"fall through","сорваться / провалиться (о планах, сделке)"],[2,"find your feet","освоиться / привыкнуть (на новом месте)"],
+[2,"fleece","флисовый / из флиса (ткань)"],[2,"follow in somebody's footsteps","пойти по чьим-то стопам (выбрать ту же профессию)"],[2,"gain a qualification / confidence / experience / insight / knowledge / understanding","получить квалификацию / уверенность / опыт / понимание / знания / осознание"],
+[2,"get a foot in the door","получить первый шанс / зацепиться (через неоплачиваемую стажировку)"],[2,"get on in life","преуспевать в жизни / продвинуться"],[2,"give somebody (valuable) insight into","дать кому-то (ценное) понимание чего-либо"],
+[2,"have drive and ambition","иметь целеустремлённость и амбиции"],[2,"heat press","термопресс (для нанесения принтов на одежду)"],[2,"hit the ground running","сразу включиться в работу / начать с полной отдачей"],
+[2,"inspire confidence","внушать доверие / уверенность"],[2,"intern","стажёр"],[2,"internship","стажировка"],
+[2,"made to order","сделанный на заказ (можно выбрать цвет и дизайн)"],[2,"make your own way in life","пробить свой путь в жизни (не зависеть от родителей)"],[2,"mentor","наставник"],
+[2,"minimum wage","минимальная зарплата"],[2,"networking","налаживание деловых связей / нетворкинг"],
 
-/* ===== БЛОК 3 (20) ===== */
-[3,"consider","рассматривать, считать"],[3,"consideration","внимательное отношение"],[3,"undermine","подрывать"],
-[3,"approach","подход"],[3,"to approach","приближаться к"],[3,"absent","отсутствующий"],
-[3,"abrupt","резкий"],[3,"judge","судья"],[3,"to judge","судить"],
-[3,"to remark","замечать"],[3,"remarkable","замечательный"],[3,"remarkably","примечательно"],
-[3,"flaw","недостаток"],[3,"despite","несмотря на"],[3,"efficacy","эффективность"],
-[3,"regarding","относительно"],[3,"lawn","газон, лужайка"],[3,"dedication","приверженность"],
-[3,"commute","дорога на работу"],[3,"commuter","человек, ездящий на дальние расстояния"],
+[3,"never look back","не оглядываться назад (добиваться успеха без сожалений)"],[3,"outweigh","перевешивать / быть важнее (о рисках и выгодах)"],[3,"overcome a problem / a situation / adversity / an obstacle / change / fear / pain / resistance / setbacks","преодолеть проблему / ситуацию / трудности / препятствие / перемены / страх / боль / сопротивление / неудачи"],
+[3,"pay attention","обращать внимание"],[3,"proceeds","выручка / средства (от продажи)"],[3,"put something on hold","приостановить что-либо (о планах, карьере)"],
+[3,"reach","охват (аудитории, в соцсетях)"],[3,"recognition","признание (заслуг)"],[3,"recruit","набирать / принимать на работу (сотрудников)"],
+[3,"referee","рекомендатель (человек, который даёт характеристику)"],[3,"resume","возобновлять (после перерыва)"],[3,"revenue","доход / выручка (от рекламы и т.п.)"],
+[3,"serve an apprenticeship","проходить обучение / стажировку (по специальности)"],[3,"settle in","освоиться / привыкнуть (на новом месте работы)"],[3,"sincere","искренний (говорит то, что думает)"],
+[3,"speak (your) mind","высказывать своё мнение (откровенно)"],[3,"splash out","потратиться / раскошелиться (на дорогую покупку)"],[3,"spontaneous","спонтанный (без предварительного плана)"],
+[3,"spur","подтолкнуть / стимулировать (к действию)"],[3,"stepping-stone","трамплин / ступенька (к дальнейшей карьере)"],
 
-/* ===== БЛОК 4 (20) ===== */
-[4,"annual","ежегодный"],[4,"affairs","дела"],[4,"Foreign affairs office","Министерство иностранных дел"],
-[4,"urban affairs","городское устройство"],[4,"to consider","рассматривать"],[4,"to undermine","подрывать"],
-[4,"to approach","приближаться"],[4,"to judge","судить"],[4,"to remark","замечать"],
-[4,"Observe","наблюдать"],[4,"observation","наблюдение"],[4,"alternate","переключаться"],
-[4,"within","внутри, в пределах"],[4,"enhance","расширять, увеличивать"],[4,"enhancement","расширение"],
-[4,"cognitive","когнитивный, познавательный"],[4,"flexible","гибкий"],[4,"flexibility","гибкость"],
-[4,"yet","однако же"],[4,"extent","степень"],
-
-/* ===== БЛОК 5 (20) ===== */
-[5,"benefit","выгода"],[5,"beneficial","выгодный"],[5,"beneficiary","бенефициарий"],
-[5,"gain","получать"],[5,"appear","казаться, появляться"],[5,"appearance","появление, внешность"],
-[5,"proficiency","профессионализм"],[5,"involve","вовлекать, включать"],[5,"suggest","предлагать, предполагать"],
-[5,"suggestion","предложение"],[5,"lead","лидировать, вести"],[5,"mislead","вводить в заблуждение"],
-[5,"reflect","отражать"],[5,"reflection","отражение"],[5,"be reflective of","отражать"],
-[5,"congruent with","гармонирующий"],[5,"be disparate from","отличаться от"],[5,"be exaggerated by","преувеличиваться"],
-[5,"exaggerate","преувеличивать"],[5,"exaggeration","преувеличение"],
-
-/* ===== БЛОК 6 (20) ===== */
-[6,"allocate","распределять"],[6,"allocation","распределение"],[6,"decide","решать"],
-[6,"decision","решение"],[6,"to face","сталкиваться с"],[6,"provide","предоставлять"],
-[6,"drought","засуха"],[6,"announce","оглашать"],[6,"announcement","оглашение"],
-[6,"favorably","благоприятно"],[6,"favor","услуга"],[6,"survey","опрос"],
-[6,"slight","легкий"],[6,"slightly","слегка"],[6,"to opt","выбирать"],
-[6,"option","опция"],[6,"launch","запускать"],[6,"convey","передавать"],
-[6,"neglect","пренебрегать"],[6,"endure","терпеть"],
-
-/* ===== БЛОК 7 (20) ===== */
-[7,"undergo","подвергаться"],[7,"a great deal","очень много"],[7,"indigenous","туземный, местный"],
-[7,"precede","предварять"],[7,"conclude","заключать"],[7,"designate","устанавливать"],
-[7,"nurture","воспитывать"],[7,"preclude","предотвращать"],[7,"assess","оценивать"],
-[7,"counteract","противодействовать"],[7,"emphasis","акцент"],[7,"emphasize","делать акцент"],
-[7,"depict","изображать"],[7,"peasant","крестьянин"],[7,"stray","отбившийся от стада"],
-[7,"wheat","пшеница"],[7,"harvest","урожай"],[7,"commitment","обязательство"],
-[7,"prominent","выдающийся"],[7,"although","хотя"],
-
-/* ===== БЛОК 8 (20) ===== */
-[8,"few","мало"],[8,"knowledge","знание"],[8,"advantage","преимущество"],
-[8,"disadvantage","недостаток"],[8,"relate","относить"],[8,"relative","относительный"],
-[8,"relatively","относительно"],[8,"relation","отношение"],[8,"relationship","отношения"],
-[8,"relative","родственник"],[8,"thrive","процветать"],[8,"advance","продвигать"],
-[8,"advanced","продвинутый"],[8,"accentuate","подчеркивать"],[8,"effort","усилие"],
-[8,"make an effort","сделать усилие"],[8,"regard","считать"],[8,"excess","излишек"],
-[8,"excessive","излишний"],[8,"perfect","превосходный"],
-
-/* ===== БЛОК 9 (20) ===== */
-[9,"imperfect","небезупречный"],[9,"perfection","идеал"],[9,"imperfection","недостатки"],
-[9,"consequence","следствие"],[9,"consequent","логично вытекающий"],[9,"objective","цель"],
-[9,"repudiation","отказ"],[9,"Overcome","преодолевать"],[9,"neglect","пренебрегать"],
-[9,"dozen","дюжина"],[9,"infallible","непогрешимый"],[9,"lucrative","прибыльный"],
-[9,"tedious","скучный, утомительный"],[9,"distract","отвлекать"],[9,"distraction","отвлечение"],
-[9,"supplement","добавка"],[9,"proponent","сторонник"],[9,"reciprocate","отвечать взаимностью"],
-[9,"buttress","поддержка"],[9,"disengage","освобождать"],
-
-/* ===== БЛОК 10 (20) ===== */
-[10,"complementary","взаимодополняющий"],[10,"disparate","разнородный"],[10,"interchangeable","взаимозаменяемый"],
-[10,"quarrel about","ссориться из-за"],[10,"paucity of","нехватка"],[10,"profusion of","изобилие"],
-[10,"verisimilitude in","правдоподобие в"],[10,"fragile","хрупкий"],[10,"fold","складывать"],
-[10,"unfold","разворачивать"],[10,"gleam","сиять"],[10,"gleaming","сияющий"],
-[10,"foliage","листва"],[10,"foster","питать"],[10,"lack","нехватка"],
-[10,"to lack","не хватать"],[10,"resume","возобновлять"],[10,"improvise","импровизировать"],
-[10,"mimic","подражать"],[10,"experiment with","экспериментировать с"],
-
-/* ===== БЛОК 11 (20) ===== */
-[11,"adhere to","придерживаться"],[11,"improve on","улучшать"],[11,"grapple with","бороться с"],
-[11,"ornamental","декоративный"],[11,"indecipherable","неразборчивый"],[11,"obscure","неясный"],
-[11,"intricate","сложный"],[11,"surmise","предполагать"],[11,"contrive","ухитряться"],
-[11,"regret","сожалеть"],[11,"tenure","владение"],[11,"consolidate","упрочняться"],
-[11,"opaque","непрозрачный"],[11,"renounce","отказываться"],[11,"delegate","поручать"],
-[11,"diversification","разнообразие"],[11,"elusive","ускользающий"],[11,"imminent","надвигающий"],
-[11,"fossil","ископаемое"],[11,"spleen","грусть"],
-
-/* ===== БЛОК 12 (20) ===== */
-[12,"tissue","ткань"],[12,"prevail","превалировать"],[12,"prevalence","превалирование"],
-[12,"predetermine","предопределять"],[12,"determine","определять"],[12,"determined","решительный"],
-[12,"latent","скрытый"],[12,"persuade","убеждать"],[12,"refute","опровергать"],
-[12,"concede","уступать"],[12,"waive","отказываться"],[12,"nuanced","утонченный"],
-[12,"reluctant","неохотный"],[12,"speculate","делать догадки"],[12,"conjecture","предположение"],
-[12,"offhand","импровизированный"],[12,"impartial","бесстрастный"],[12,"persist","настойчиво преследовать"],
-[12,"persistent","настойчивый"],[12,"mandatory","обязательный"],
-
-/* ===== БЛОК 13 (20) ===== */
-[13,"circumvent","обходить хитростью"],[13,"eclipse","затмение"],[13,"existence","существование"],
-[13,"exist","существовать"],[13,"biased","предвзятый"],[13,"unbiased","непредвзятый"],
-[13,"straightforward","прямолинейный"],[13,"discernible","выраженный"],[13,"proclaim","провозглашать"],
-[13,"foretell","предсказывать"],[13,"recant","отречься"],[13,"perceive","воспринимать"],
-[13,"perception","восприятие"],[13,"perceptive","восприимчивый"],[13,"emerge","возникать"],
-[13,"intestine","кишечник"],[13,"investigate","расследовать"],[13,"depend","зависеть"],
-[13,"dependent","зависимый"],[13,"independent","независимый"],
-
-/* ===== БЛОК 14 (20) ===== */
-[14,"independently","независимо"],[14,"separate","отдельный"],[14,"to separate","отделять"],
-[14,"instance","момент"],[14,"appear","появляться"],[14,"appearance","появление"],
-[14,"disappear","исчезать"],[14,"disappearance","исчезновение"],[14,"respective","относительный"],
-[14,"respectively","соответственно"],[14,"irrespectively","безотносительно"],[14,"carry out","выполнять"],
-[14,"accord","согласовываться"],[14,"contribute to","делать вклад"],[14,"assess","оценивать"],
-[14,"circumstances","обстоятельства"],[14,"ensure","обеспечивать"],[14,"occupy","занимать"],
-[14,"reserve","резервировать"],[14,"preserve","сохранять"],
-
-/* ===== БЛОК 15 (20) ===== */
-[15,"obtain","получать"],[15,"reduce","снижать"],[15,"evaluate","оценивать"],
-[15,"determined","целеустремленный"],[15,"acquire","приобретать"],[15,"tenuous","шаткий"],
-[15,"enduring","долговременный"],[15,"contentious","спорный"],[15,"conspicuous","заметный"],
-[15,"Evidence","доказательство"],[15,"Blemish","изъян"],[15,"Amount","количество"],
-[15,"Sketch","набросок"],[15,"Recognizable","узнаваемый"],[15,"Fragile","хрупкий"],
-[15,"Common","распространенный"],[15,"Sophisticated","утонченный"],[15,"Antecedent","предшествующий"],
-[15,"Impending","надвигающийся"],[15,"Innocuous","безвредный"],
-
-/* ===== БЛОК 16 (20) ===== */
-[16,"Perpetual","вечный"],[16,"Hypothesize","предположить"],[16,"Discounted","отвергнуть"],
-[16,"Redefine","переопределить"],[16,"Exploit","использовать"],[16,"Sanction","санкционировать"],
-[16,"Ameliorate","улучшать"],[16,"Rationalize","рационализировать"],[16,"Postulate","постулировать"],
-[16,"fellow","парень, товарищ"],[16,"praise","хвалить"],[16,"pursuit","стремление"],
-[16,"chant","петь"],[16,"soothe","успокаивать"],[16,"soothing","успокаивающий"],
-[16,"cuttlefish","каракатица"],[16,"assumption","предположение"],[16,"intend","намереваться"],
-[16,"intention","намерение"],[16,"intentional","намеренный"],
-
-/* ===== БЛОК 17 (20) ===== */
-[17,"intentionally","намеренно"],[17,"unintentionally","ненамеренно"],[17,"yield","давать урожай"],
-[17,"for instance","например"],[17,"flourish","процветать"],[17,"surpass","превзойти"],
-[17,"thrive","процветать"],[17,"clue","ключ к пониманию"],[17,"dense","плотный"],
-[17,"density","плотность"],[17,"restrict","ограничивать"],[17,"beyond","помимо"],
-[17,"obstacle","препятствие"],[17,"passage","отрывок"],[17,"extinct","вымерший"],
-[17,"extinction","вымирание"],[17,"habitat","среда обитания"],[17,"Diverse","разнообразный"],
-[17,"diversity","разнообразие"],[17,"diversify","варьировать"],
-
-/* ===== БЛОК 18 (20) ===== */
-[18,"ensure","обеспечивать"],[18,"retain","удерживать"],[18,"retention","удержание"],
-[18,"reciprocate","отвечать взаимностью"],[18,"abandon","бросать"],[18,"annotate","комментировать"],
-[18,"substantial","прочный"],[18,"meager","скудный"],[18,"conventional","общепринятый"],
-[18,"Tough","жесткий, трудный"],[18,"Hideous","отвратительный"],[18,"Complicated","сложный"],
-[18,"Intense","глубокий, сильный"],[18,"irresolvable","неразрешимый"],[18,"self-contradictory","противоречащий себе"],
-[18,"imperative","срочный, важный"],[18,"unavoidable","неизбежный"],[18,"Species","виды"],
-[18,"tend to","быть склонным"],[18,"controversial","спорный, вызывающий споры"],
-
-/* ===== БЛОК 19 (20) ===== */
-[19,"extensive","обширный, широкий"],[19,"universal","всеобщий, универсальный"],[19,"long to V","очень хотеть что-либо сделать"],
-[19,"resilient","устойчивый, стойкий"],[19,"buoy","буй, бакен"],[19,"retina","сетчатка глаза"],
-[19,"vessel","судно, корабль; сосуд"],[19,"conceit","тщеславие, самомнение; необычная идея"],[19,"alas","увы"],
-[19,"pinch","щипать; щепотка"],[19,"capacity","способность, возможность; вместимость"],[19,"expediently","целесообразно, практично"],
-[19,"aware","осведомлённый, знающий"],[19,"unaware","не осведомлённый, не знающий"],[19,"imply","подразумевать, намекать"],
-[19,"justify","оправдывать, обосновывать"],[19,"contemporary","современный; современник"],[19,"occasional","случайный, периодический"],
-[19,"occasionally","иногда, время от времени"],[19,"myriad","огромное количество, множество"],
-
-/* ===== БЛОК 20 (20) ===== */
-[20,"untenable","несостоятельный, невыносимый"],[20,"deficient","недостаточный, испытывающий недостаток"],[20,"compel","принуждать, вынуждать"],
-[20,"subtle","тонкий, едва различимый, неявный"],[20,"subtleties","тонкости, нюансы"],[20,"take into account","принимать во внимание, учитывать"],
-[20,"modern","современный, нынешний; передовой"],[20,"definition","определение, дефиниция"],
-[20,"concern","беспокойство; вопрос, проблема; предмет внимания"],[20,"chaos","хаос, полный беспорядок"],
-[20,"chaotic","хаотичный, беспорядочный"],[20,"pile","стопка, куча; складывать в стопку"],
-[20,"pile up","накапливаться, скапливаться"],[20,"compile","составлять, собирать и систематизировать"],
-[20,"prey","добыча"],[20,"carnivorous","плотоядный"],[20,"unearthed","раскопан"],
-[20,"fairly","справедливо"],[20,"ridge","хребет"],[20,"pitches","смолы"],
-
-/* ===== БЛОК 21 (20) ===== */
-[21,"moisture","влага"],[21,"avoided","избегал, уклонялся"],[21,"featured","включал в себя, содержал, выводил на первый план"],
-[21,"appreciated","ценил, высоко оценивал, был благодарен"],[21,"disregarded","игнорировал, пренебрегал"],
-[21,"fascinated","очарованный"],[21,"vivid","яркий"],[21,"bloom","цветение, расцвет; цвести"],
-[21,"toll","плата, потери; звонить в колокол"],[21,"polled","опрошенный; проводил опрос"],
-[21,"originate from","происходить из, брать начало от"],[21,"coincidence","совпадение"],
-[21,"an oddity","странность, необычность"],[21,"a reprieve","передышка, отсрочка"],
-[21,"an incident","происшествие, случай"],[21,"esteem","уважение, почтение"],
-[21,"hesitated","колебался, медлил"],[21,"robust","крепкий, здоровый; устойчивый"],
-[21,"breached","нарушил, пробил брешь"],[21,"haphazard","бессистемный, случайный"],
-
-/* ===== БЛОК 22: МАТЕМАТИКА (72) ===== */
-[22,"Equation","уравнение"],[22,"Inequality","неравенство"],[22,"Linear equation","линейное уравнение"],
-[22,"Linear function","линейная функция"],[22,"Slope","угловой коэффициент"],[22,"Gradient","наклон"],
-[22,"Intercept","точка пересечения с осью"],[22,"x-intercept","точка пересечения с осью X"],[22,"y-intercept","точка пересечения с осью Y"],
-[22,"System of equations","система уравнений"],[22,"Quadratic function","квадратичная функция"],[22,"Polynomial","многочлен"],
-[22,"Factor","разложить на множители"],[22,"Exponent","показатель степени"],[22,"Power","степень"],
-[22,"Radical","корень"],[22,"Root","корень"],[22,"Variable","переменная"],
-[22,"Constant","константа"],[22,"Expression","выражение"],[22,"Equivalent","эквивалентный"],
-[22,"Coefficient","коэффициент"],[22,"Domain","область определения"],[22,"Vertex","вершина"],
-[22,"Mean","среднее арифметическое"],[22,"Average","среднее"],[22,"Median","медиана"],
-[22,"Mode","мода"],[22,"Range","размах выборки"],[22,"Standard Deviation","стандартное отклонение"],
-[22,"Probability","вероятность"],[22,"Ratio","отношение"],[22,"Proportion","пропорция"],
-[22,"Scatter plot","диаграмма рассеяния"],[22,"Line of best fit","линия наилучшего соответствия"],[22,"Distribution","распределение"],
-[22,"Triangle","треугольник"],[22,"Right triangle","прямоугольный треугольник"],[22,"Isosceles triangle","равнобедренный треугольник"],
-[22,"Equilateral triangle","равносторонний треугольник"],[22,"Hypotenuse","гипотенуза"],[22,"Quadrilateral","четырёхугольник"],
-[22,"Rectangle","прямоугольник"],[22,"Circumference","длина окружности"],[22,"Radius","радиус"],
-[22,"Diameter","диаметр"],[22,"Angle","угол"],[22,"Acute angle","острый угол"],
-[22,"Obtuse angle","тупой угол"],[22,"Right angle","прямой угол"],[22,"Bisector","биссектриса"],
-[22,"Parallel","параллельный"],[22,"Perpendicular","перпендикулярный"],[22,"Congruent","конгруэнтный"],
-[22,"Similar triangles","подобные треугольники"],[22,"Area","площадь"],[22,"Surface area","площадь поверхности"],
-[22,"Coordinate","координата"],[22,"Axis","ось"],[22,"Plane","плоскость"],
-[22,"Integer","целое число"],[22,"Odd number","нечётное число"],[22,"Even number","чётное число"],
-[22,"Fraction","дробь"],[22,"Decimal","десятичная дробь"],[22,"Reciprocal","обратное число"],
-[22,"Square root","квадратный корень"],[22,"Absolute value","абсолютная величина"],[22,"Quotient","частное"],
-[22,"Remainder","остаток"],[22,"Consecutive integers","последовательные целые числа"],
-
-/* ===== БЛОК 23: НОВЫЕ СЛОВА ч.1 (17) ===== */
-[23,"comprehend","понимать"],[23,"outmoded","устаревший, вышедший из моды"],[23,"suppress","подавлять"],
-[23,"unassuming","непритязательный"],[23,"shrewd","хитрый"],[23,"incongruous","несоответствующий, несообразный"],
-[23,"pretentious","претенциозный"],[23,"initial","начальный, первоначальный"],[23,"porcelain","фарфор"],
-[23,"captivated","очарованный, пленённый"],[23,"translucence","полупрозрачность, просвечиваемость"],[23,"glared","свирепо смотрел, сверкал"],
-[23,"depict themself","изображать себя"],[23,"election","выборы"],[23,"admiration","восхищение"],
-[23,"carved","вырезанный, высеченный"],[23,"frequently","часто"],
-
-/* ===== БЛОК 24: ДОП. СЛОВА 21 (6) ===== */
-[24,"varied","разнообразный, различный"],[24,"debris","обломки, мусор"],
-[24,"mudes","(опечатка) — вероятно, moods: настроения"],[24,"faithfull","(опечатка) — верный, преданный"],
-[24,"prior","предшествующий, более ранний"],[24,"subdued","приглушённый, подавленный"],
-
-/* ===== БЛОК 25: НОВЫЕ СЛОВА ч.2 (12) ===== */
-[25,"abstruse","трудный для понимания, заумный"],[25,"lucid","ясный, понятный"],[25,"verbose","многословный"],
-[25,"ambiguous","двусмысленный, неоднозначный"],[25,"mortgage","ипотека, залог"],[25,"tile","плитка, черепица"],
-[25,"dazzling","ослепительный, потрясающий"],[25,"exuberant","жизнерадостный, бурный"],[25,"evaporates","испаряется"],
-[25,"adept","искусный, умелый"],[25,"basin","бассейн, таз, котловина"],[25,"underscores","подчёркивает"],
-
-/* ===== БЛОК 26: СВЯЗКИ И ПЕРЕХОДЫ (48) ===== */
-[26,"but","но"],[26,"yet","однако, но"],[26,"though","хотя; однако"],
-[26,"although","хотя, несмотря на то что"],[26,"even though","даже хотя"],[26,"while","тогда как, в то время как"],
-[26,"whereas","тогда как, в то время как"],[26,"even if","даже если"],[26,"however","однако"],
-[26,"nevertheless","тем не менее"],[26,"nonetheless","тем не менее"],[26,"still","тем не менее, всё же"],
-[26,"instead","вместо этого"],[26,"conversely","наоборот, обратно"],[26,"on the other hand","с другой стороны"],
-[26,"in contrast","в противоположность"],[26,"alternatively","в качестве альтернативы"],[26,"that said","при этом, однако"],
-[26,"granted","правда, конечно"],[26,"moreover","более того, кроме того"],[26,"furthermore","более того, кроме того"],
-[26,"in addition","вдобавок, к тому же"],[26,"additionally","вдобавок, к тому же"],[26,"also","также"],
-[26,"besides","кроме того"],[26,"similarly","аналогично, точно так же"],[26,"likewise","аналогично, точно так же"],
-[26,"indeed","в самом деле, действительно"],[26,"in fact","в самом деле, фактически"],[26,"therefore","следовательно, поэтому"],
-[26,"thus","следовательно, таким образом"],[26,"hence","следовательно, отсюда"],[26,"consequently","в результате, следовательно"],
-[26,"as a result","в результате"],[26,"accordingly","соответственно, поэтому"],[26,"because","потому что"],
-[26,"since","так как, поскольку"],[26,"as","так как, по мере того как"],[26,"so","так что, поэтому"],
-[26,"for this reason","по этой причине"],[26,"for example","например"],[26,"for instance","например"],
-[26,"specifically","конкретно, в частности"],[26,"in other words","иными словами"],[26,"that is","то есть"],
-[26,"namely","а именно"],[26,"meanwhile","тем временем"],[26,"subsequently","впоследствии, затем"],
-[26,"finally","наконец"],[26,"ultimately","в конечном счёте"],
-
-/* ===== БЛОК 27: НОВЫЕ СЛОВА ч.3 (24) ===== */
-[27,"microbeads","микрогранулы, микросферы"],[27,"contrary","противоположный, вопреки"],
-[27,"scarne","скудный, убогий (вероятно, опечатка: scarce)"],[27,"invasive","инвазивный, захватнический"],
-[27,"tangible","осязаемый, материальный"],[27,"burdensome","обременительный, тяжёлый"],
-[27,"endorsed","поддержал, одобрил"],[27,"called forth","вызвал, пробудил"],
-[27,"resolute","решительный, твёрдый"],[27,"climax","кульминация, развязка"],
-[27,"interruption","прерывание, помеха"],[27,"corroborate","подтверждать, подкреплять"],
-[27,"temporary","временный"],[27,"clarity","ясность, чёткость"],
-[27,"mediocre","посредственный"],[27,"groundbreaking","новаторский, революционный"],
-[27,"vague","смутный, расплывчатый"],[27,"concise","краткий, сжатый"],
-[27,"passionate","страстный, пылкий"],[27,"contradict","противоречить"],
-[27,"benign","доброкачественный, мягкий"],[27,"wealthy","богатый, состоятельный"],
-[27,"patrons","покровители, завсегдатаи"],[27,"deliberately","намеренно, умышленно"]
+[4,"suffer a setback","потерпеть неудачу / столкнуться с препятствием"],[4,"take up a career / a hobby / a position / a post","начать карьеру / заняться хобби / занять должность"],[4,"throw yourself into","с головой погрузиться в (дело)"],
+[4,"tricks of the trade","профессиональные хитрости / секреты мастерства"],[4,"trustworthy","заслуживающий доверия / надёжный"],[4,"try your hand at something","попробовать свои силы в чём-либо (написать роман и т.п.)"],
+[4,"undertake a study / a survey / a task / an analysis / an investigation","предпринять исследование / опрос / задачу / анализ / расследование"],[4,"voice an opinion","высказать мнение (получить такую возможность)"],[4,"weigh up the consequences / the pros and cons","взвесить последствия / все за и против"],
+[4,"well-suited","хорошо подходящий (по характеру, способностям)"],[4,"work placement","производственная практика / временная стажировка"]
 ];
 
-const TOTAL_BLOCKS = 27;
-
-// BLOCK_SIZES всегда пересчитывается из реального массива state.words — так
-// счётчик показывает корректное "выучено/всего" и не даёт расхождений вида 27/12.
-let BLOCK_SIZES = {};
-
-function recomputeBlockSizes(){
-  BLOCK_SIZES = {};
-  state.words.forEach(w => {
-    BLOCK_SIZES[w.blockId] = (BLOCK_SIZES[w.blockId] || 0) + 1;
-  });
-}
-
-function blockLabel(b){
-  return BLOCK_NAMES[b] ? `Блок ${b} — ${BLOCK_NAMES[b]}` : `Блок ${b}`;
-}
+const TOTAL_BLOCKS = 4;
+const BLOCK_SIZES = {}; // считаем размер каждого блока по факту
+WORDS_RAW.forEach(([b])=>{ BLOCK_SIZES[b]=(BLOCK_SIZES[b]||0)+1; });
 
 function buildBaseWords(){
   return WORDS_RAW.map((row,i)=>({
@@ -596,11 +490,15 @@ function buildBaseWords(){
     translation: row[2],
     example: '',
     blockId: row[0],
-    history: []
+    history: []          // массив последних до 5 ответов: 'know' | 'dontknow'
   }));
 }
 
-/* ---------- 2. СОСТОЯНИЕ ---------- */
+/* ---------- 2. СОСТОЯНИЕ ПРИЛОЖЕНИЯ ---------- */
+// Универсальный слой хранения:
+// - если файл открыт внутри Claude (артефакт) — доступен window.storage, используем его
+// - если файл открыт как обычный HTML (двойным кликом / в браузере) — используем localStorage
+// Это нужно, чтобы прогресс сохранялся в ЛЮБОМ варианте использования файла.
 const hasWindowStorage = (typeof window !== 'undefined')
   && window.storage
   && typeof window.storage.get === 'function'
@@ -611,29 +509,43 @@ async function storageGetRaw(key){
     try{
       const res = await window.storage.get(key, false);
       return (res && typeof res.value === 'string') ? res.value : null;
-    }catch(e){ return null; }
+    }catch(e){
+      return null; // ключа ещё нет — это нормально при первом запуске
+    }
   }
-  try{ return localStorage.getItem(key); }
-  catch(e){ console.error('localStorage недоступен:', e); return null; }
+  try{
+    return localStorage.getItem(key);
+  }catch(e){
+    console.error('localStorage недоступен:', e);
+    return null;
+  }
 }
 async function storageSetRaw(key, value){
   if(hasWindowStorage){
     try{
       const result = await window.storage.set(key, value, false);
       return !!result;
-    }catch(e){ console.error('Ошибка window.storage.set:', e); return false; }
+    }catch(e){
+      console.error('Ошибка window.storage.set:', e);
+      return false;
+    }
   }
-  try{ localStorage.setItem(key, value); return true; }
-  catch(e){ console.error('Ошибка localStorage.setItem:', e); return false; }
+  try{
+    localStorage.setItem(key, value);
+    return true;
+  }catch(e){
+    console.error('Ошибка localStorage.setItem:', e);
+    return false;
+  }
 }
 
-const STORAGE_WORDS = 'satVocab_words_v1';
-const STORAGE_SETTINGS = 'satVocab_settings_v1';
+const STORAGE_WORDS = 'hwVocab_words_v1';
+const STORAGE_SETTINGS = 'hwVocab_settings_v1';
 
 let state = {
   words: [],
   settings: { roundSize: 10, currentBlock: 1, theme: 'dark' },
-  round: null
+  round: null // {wordIds:[], index:0, revealed:false, correct:0, wrong:0, mode:'new'|'review'}
 };
 
 async function loadData(){
@@ -646,69 +558,38 @@ async function loadData(){
   const rawSettings = await storageGetRaw(STORAGE_SETTINGS);
   if(rawSettings){
     try{ state.settings = Object.assign(state.settings, JSON.parse(rawSettings)); }
-    catch(e){}
+    catch(e){ /* повреждённые настройки — используем значения по умолчанию */ }
   }
-
-  const beforeCount = state.words.length;
-  dedupeWords();
-  if(state.words.length !== beforeCount){
-    await saveWords();
-    showToast(`🧹 Удалено дубликатов: ${beforeCount - state.words.length}`);
-  }
-
   await mergeNewBaseWords();
-  recomputeBlockSizes();
-  await applyOneTimeMigrations();
 }
 
-// Удаляет дубликаты по ключу (blockId + lowercased english).
-function dedupeWords(){
-  const seen = new Map();
-  const result = [];
-  state.words.forEach(w => {
-    const key = w.blockId + '|' + String(w.english || '').toLowerCase().trim();
-    if(seen.has(key)){
-      const kept = seen.get(key);
-      if((w.history || []).length > (kept.history || []).length){
-        kept.history = w.history;
-      }
-    } else {
-      seen.set(key, w);
-      result.push(w);
-    }
-  });
-  state.words = result;
-}
-
-async function applyOneTimeMigrations(){
-  if(!Array.isArray(state.settings.migrations)) state.settings.migrations = [];
-
-  if(!state.settings.migrations.includes('markBlocks1to18Learned')){
-    state.words.forEach(w => {
-      if(w.blockId <= 18){
-        w.history = ['know','know','know','know','know'];
-      }
-    });
-    state.settings.migrations.push('markBlocks1to18Learned');
-    await saveWords();
-    await saveSettings();
-    showToast('✅ Блоки 1–18 отмечены как выученные');
-  }
-}
-
+// Если в коде появились новые "родные" слова (новые блоки/слова, добавленные Claude),
+// добавляем их к уже сохранённому прогрессу пользователя, НЕ трогая существующую историю.
+// Если текст существующего слова (английское слово/перевод) отредактирован в коде —
+// синхронизируем текст, но история ответов (прогресс) остаётся нетронутой.
+// Слова, добавленные самим пользователем вручную, никогда не совпадают по id (у них id вида 'w'+timestamp),
+// поэтому не задеваются.
 async function mergeNewBaseWords(){
   const base = buildBaseWords();
-  const existingIds = new Set(state.words.map(w => w.id));
-  let added = 0;
+  const existingById = new Map(state.words.map(w => [w.id, w]));
+  let added = 0, updated = 0;
   base.forEach(bw => {
-    if(!existingIds.has(bw.id)){
+    const existing = existingById.get(bw.id);
+    if(!existing){
       state.words.push(bw);
       added++;
+    }else if(existing.english !== bw.english || existing.translation !== bw.translation){
+      existing.english = bw.english;
+      existing.translation = bw.translation;
+      updated++;
     }
   });
-  if(added > 0){
+  if(added > 0 || updated > 0){
     await saveWords();
-    showToast(`Добавлено новых слов: ${added}`);
+    const parts = [];
+    if(added) parts.push(`добавлено слов: ${added}`);
+    if(updated) parts.push(`обновлены переводы: ${updated}`);
+    showToast(parts.join(', '));
   }
 }
 async function saveWords(){
@@ -734,17 +615,16 @@ function recordAnswer(word, known){
   saveWords();
 }
 
-/* ---------- 4. ВЕРХНЯЯ ПАНЕЛЬ ---------- */
+/* ---------- 4. РЕНДЕР: ВЕРХНЯЯ ПАНЕЛЬ ---------- */
 function renderTopbar(){
   const select = document.getElementById('blockSelect');
   select.innerHTML = '';
   for(let b=1; b<=TOTAL_BLOCKS; b++){
-    const total = BLOCK_SIZES[b];
-    if(total === undefined) continue;
     const learned = learnedCountInBlock(b);
+    const total = BLOCK_SIZES[b];
     const opt = document.createElement('option');
     opt.value = b;
-    opt.textContent = `${blockLabel(b)} — Выучено ${learned}/${total}`;
+    opt.textContent = `Блок ${b} — Выучено ${learned}/${total}`;
     if(b === state.settings.currentBlock) opt.selected = true;
     select.appendChild(opt);
   }
@@ -754,19 +634,18 @@ function renderTopbar(){
   document.getElementById('overallBarFill').style.width = (wordsTotal? (learnedTotal/wordsTotal*100):0) + '%';
 }
 
-/* ---------- 5. БОКОВАЯ ПАНЕЛЬ ---------- */
+/* ---------- 5. РЕНДЕР: БОКОВАЯ ПАНЕЛЬ ---------- */
 function renderSidebar(){
   const list = document.getElementById('blockList');
   list.innerHTML = '';
   for(let b=1; b<=TOTAL_BLOCKS; b++){
-    const total = BLOCK_SIZES[b];
-    if(total === undefined) continue;
     const learned = learnedCountInBlock(b);
+    const total = BLOCK_SIZES[b];
     const row = document.createElement('div');
     row.className = 'block-row' + (b === state.settings.currentBlock ? ' active' : '');
     row.innerHTML = `
       <div class="block-row-top">
-        <span>${blockLabel(b)}</span>
+        <span>Блок ${b}</span>
         <span class="status">${learned}/${total}${learned===total?' ✅':''}</span>
       </div>
       <div class="block-bar"><div class="block-bar-fill" style="width:${total? (learned/total*100):0}%"></div></div>
@@ -795,9 +674,8 @@ function renderSidebar(){
   const newWordBlockSelect = document.getElementById('newWordBlock');
   newWordBlockSelect.innerHTML = '';
   for(let b=1; b<=TOTAL_BLOCKS; b++){
-    if(BLOCK_SIZES[b] === undefined) continue;
     const opt = document.createElement('option');
-    opt.value = b; opt.textContent = blockLabel(b);
+    opt.value = b; opt.textContent = 'Блок ' + b;
     if(b === state.settings.currentBlock) opt.selected = true;
     newWordBlockSelect.appendChild(opt);
   }
@@ -805,16 +683,19 @@ function renderSidebar(){
   const bulkWordBlockSelect = document.getElementById('bulkWordBlock');
   bulkWordBlockSelect.innerHTML = '';
   for(let b=1; b<=TOTAL_BLOCKS; b++){
-    if(BLOCK_SIZES[b] === undefined) continue;
     const opt = document.createElement('option');
-    opt.value = b; opt.textContent = blockLabel(b);
+    opt.value = b; opt.textContent = 'Блок ' + b;
     if(b === state.settings.currentBlock) opt.selected = true;
     bulkWordBlockSelect.appendChild(opt);
   }
 }
 
-/* ---------- 6. ГЛАВНАЯ ОБЛАСТЬ ---------- */
-function renderAll(){ renderTopbar(); renderSidebar(); renderMain(); }
+/* ---------- 6. РЕНДЕР: ГЛАВНАЯ ОБЛАСТЬ ---------- */
+function renderAll(){
+  renderTopbar();
+  renderSidebar();
+  renderMain();
+}
 
 function renderMain(){
   const main = document.getElementById('mainArea');
@@ -824,17 +705,27 @@ function renderMain(){
   const blockWords = wordsInBlock(blockId);
   const unlearned = blockWords.filter(w => !isLearned(w));
 
-  if(state.round && !state.round.finished){ main.appendChild(renderRoundCard()); return; }
-  if(state.round && state.round.finished){ main.appendChild(renderRoundSummary()); return; }
+  // --- Идёт раунд ---
+  if(state.round && !state.round.finished){
+    main.appendChild(renderRoundCard());
+    return;
+  }
+
+  // --- Раунд только что завершён ---
+  if(state.round && state.round.finished){
+    main.appendChild(renderRoundSummary());
+    return;
+  }
 
   const learnedCount = learnedCountInBlock(blockId);
 
+  // --- Все слова блока выучены ---
   if(unlearned.length === 0){
     const wrap = document.createElement('div');
     wrap.className = 'empty-state';
     wrap.innerHTML = `
       <div class="big">🏆</div>
-      <h3>${blockLabel(blockId)} полностью выучен!</h3>
+      <h3>Блок ${blockId} полностью выучен!</h3>
       <p>Все ${blockWords.length} слов в этом блоке выучены наизусть. Можно повторить их ещё раз, выбрать другой блок или сбросить прогресс.</p>
       <button class="btn btn-primary" id="reviewBtn" style="margin-top:22px;">🔁 Повторить выученные (${learnedCount})</button>
     `;
@@ -843,13 +734,14 @@ function renderMain(){
     return;
   }
 
+  // --- Экран "Начать раунд" ---
   const wrap = document.createElement('div');
   wrap.className = 'start-round-area';
   const roundSize = Math.min(state.settings.roundSize, unlearned.length);
   wrap.innerHTML = `
     <div class="empty-state">
       <div class="big">📖</div>
-      <h3>${blockLabel(blockId)}</h3>
+      <h3>Блок ${blockId}</h3>
       <p>Не выучено слов: ${unlearned.length} из ${blockWords.length}</p>
     </div>
     <button class="btn btn-primary" id="startRoundBtn" style="margin-top:22px;">Начать раунд (${roundSize} слов)</button>
@@ -869,6 +761,7 @@ function renderRoundCard(){
   container.style.flexDirection = 'column';
   container.style.alignItems = 'center';
 
+  // индикатор раунда (мини-точки)
   const dotsHtml = r.wordIds.map((_,i)=>{
     let cls = '';
     if(i < r.index) cls = 'done';
@@ -893,7 +786,7 @@ function renderRoundCard(){
   const correctStreak = word.history.filter(h=>h==='know').length;
 
   card.innerHTML = `
-    <div class="card-tag">${blockLabel(word.blockId).toUpperCase()} · ${r.mode === 'review' ? '🔁 повторение' : r.mode === 'globalReview' ? '🔁 общее повторение' : 'изучение'}</div>
+    <div class="card-tag">Блок <b>${String(word.blockId).padStart(2,'0')}</b> · ${r.mode === 'review' ? '🔁 повторение' : r.mode === 'globalReview' ? '🔁 общее повторение' : 'изучение'}</div>
     <div class="word-en">${escapeHtml(word.english)}</div>
     <div class="word-translation" id="translationEl">${escapeHtml(word.translation)}</div>
     ${word.example ? `<div class="word-example" id="exampleEl">${escapeHtml(word.example)}</div>` : ''}
@@ -916,6 +809,7 @@ function renderRoundCard(){
   `;
   container.appendChild(controls);
 
+  // перевод/пример скрыты, пока не нажата кнопка
   requestAnimationFrame(()=>{
     document.getElementById('showTranslationBtn').addEventListener('click', ()=>{
       document.getElementById('translationEl').classList.add('visible');
@@ -936,8 +830,8 @@ function renderRoundSummary(){
   const subtitle = r.mode === 'globalReview'
     ? 'Общее повторение всех выученных слов'
     : r.mode === 'review'
-    ? `${blockLabel(state.settings.currentBlock)} · повторение выученных слов`
-    : blockLabel(state.settings.currentBlock);
+    ? `Блок ${state.settings.currentBlock} · повторение выученных слов`
+    : `Блок ${state.settings.currentBlock}`;
   wrap.innerHTML = `
     <h2>Раунд завершён!</h2>
     <div class="sub">${subtitle}</div>
@@ -962,20 +856,42 @@ function escapeHtml(str){
   return div.innerHTML;
 }
 
-/* ---------- 7. РАУНД ---------- */
+/* ---------- 7. ЛОГИКА РАУНДА ---------- */
+// mode: 'new' — только невыученные слова текущего блока
+//       'review' — повтор уже выученных слов ТЕКУЩЕГО блока
+//       'globalReview' — повтор уже выученных слов ИЗ ВСЕХ БЛОКОВ
 function startRound(mode){
   mode = mode || 'new';
   const blockId = state.settings.currentBlock;
   let pool;
-  if(mode === 'globalReview'){ pool = state.words.filter(isLearned); }
-  else if(mode === 'review'){ pool = learnedWordsInBlock(blockId); }
-  else { pool = wordsInBlock(blockId).filter(w => !isLearned(w)); }
+  if(mode === 'globalReview'){
+    pool = state.words.filter(isLearned);
+  } else if(mode === 'review'){
+    pool = learnedWordsInBlock(blockId);
+  } else {
+    pool = wordsInBlock(blockId).filter(w => !isLearned(w));
+  }
 
-  if(pool.length === 0){ showToast('Нет слов для раунда'); return; }
+  if(pool.length === 0){
+    const msg = mode === 'globalReview' ? 'Нет выученных слов для повторения'
+      : mode === 'review' ? 'Нет выученных слов для повторения'
+      : 'Все слова блока уже выучены';
+    showToast(msg);
+    return;
+  }
 
+  // В режиме "повторить все выученные" берём ВСЕ слова пула целиком,
+  // не ограничивая ползунком "слов в раунде" — это отдельный полный прогон.
   const size = mode === 'globalReview' ? pool.length : Math.min(state.settings.roundSize, pool.length);
   const shuffled = [...pool].sort(()=>Math.random()-0.5).slice(0, size);
-  state.round = { wordIds: shuffled.map(w=>w.id), index: 0, correct: 0, wrong: 0, finished: false, mode: mode };
+  state.round = {
+    wordIds: shuffled.map(w=>w.id),
+    index: 0,
+    correct: 0,
+    wrong: 0,
+    finished: false,
+    mode: mode
+  };
   renderAll();
 }
 
@@ -986,21 +902,24 @@ function submitAnswer(known){
   recordAnswer(word, known);
   if(known) r.correct++; else r.wrong++;
 
-  const wordBlockId = word.blockId;
+  const wordBlockId = word.blockId; // используем блок самого слова, а не текущий выбранный блок —
+                                     // это важно для режима "повторить все выученные", где слова из разных блоков
   const nowLearned = isLearned(word);
   const blockFullyLearnedNow = !wasLearnedBefore && nowLearned && (learnedCountInBlock(wordBlockId) === BLOCK_SIZES[wordBlockId]);
 
   r.index++;
-  if(r.index >= r.wordIds.length){ r.finished = true; }
+  if(r.index >= r.wordIds.length){
+    r.finished = true;
+  }
   renderAll();
 
   if(blockFullyLearnedNow){
     launchConfetti();
-    showToast('🎉 ' + blockLabel(wordBlockId) + ' полностью выучен!');
+    showToast('🎉 Блок ' + wordBlockId + ' полностью выучен!');
   }
 }
 
-/* ---------- 8. ЭКСПОРТ/ИМПОРТ ---------- */
+/* ---------- 8. ЭКСПОРТ / ИМПОРТ ---------- */
 function exportData(){
   const data = { words: state.words, settings: state.settings, exportedAt: new Date().toISOString() };
   const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
@@ -1019,31 +938,37 @@ function importData(file){
       if(data.words && Array.isArray(data.words)){
         state.words = data.words;
         if(data.settings) state.settings = Object.assign(state.settings, data.settings);
-        dedupeWords();
-        recomputeBlockSizes();
         saveWords(); saveSettings();
         state.round = null;
         renderAll();
         showToast('Данные успешно импортированы');
-      } else { showToast('Неверный формат файла'); }
-    }catch(err){ showToast('Ошибка при чтении файла'); }
+      }else{
+        showToast('Неверный формат файла');
+      }
+    }catch(err){
+      showToast('Ошибка при чтении файла');
+    }
   };
   reader.readAsText(file);
 }
 
-/* ---------- 9. СБРОС ---------- */
+/* ---------- 9. СБРОС ПРОГРЕССА ---------- */
 function resetBlockProgress(blockId){
   wordsInBlock(blockId).forEach(w => w.history = []);
-  saveWords(); state.round = null; renderAll();
-  showToast(`Прогресс ${blockLabel(blockId)} сброшен`);
+  saveWords();
+  state.round = null;
+  renderAll();
+  showToast(`Прогресс блока ${blockId} сброшен`);
 }
 function resetAllProgress(){
   state.words.forEach(w => w.history = []);
-  saveWords(); state.round = null; renderAll();
+  saveWords();
+  state.round = null;
+  renderAll();
   showToast('Весь прогресс сброшен');
 }
 
-/* ---------- 10. ДОБАВЛЕНИЕ СЛОВ ---------- */
+/* ---------- 10. ДОБАВЛЕНИЕ СЛОВА ---------- */
 function addWord(){
   const block = parseInt(document.getElementById('newWordBlock').value, 10);
   const en = document.getElementById('newWordEn').value.trim();
@@ -1052,14 +977,18 @@ function addWord(){
   if(!en || !tr){ showToast('Заполните слово и перевод'); return; }
   const newId = 'w' + Date.now();
   state.words.push({ id:newId, english:en, translation:tr, example:ex, blockId:block, history:[] });
-  recomputeBlockSizes();
+  BLOCK_SIZES[block] = (BLOCK_SIZES[block]||0) + 1;
   saveWords();
   document.getElementById('newWordEn').value = '';
   document.getElementById('newWordTr').value = '';
   document.getElementById('newWordEx').value = '';
-  closeModal(); renderAll(); showToast('Слово добавлено');
+  closeModal();
+  renderAll();
+  showToast('Слово добавлено');
 }
 
+/* ---------- 10b. МАССОВОЕ ДОБАВЛЕНИЕ СЛОВ (списком, через дефис) ---------- */
+// Формат строки: "английское слово - перевод" (дефис с пробелами или без)
 function parseBulkWords(text){
   const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
   const parsed = [];
@@ -1067,17 +996,21 @@ function parseBulkWords(text){
   lines.forEach(line => {
     let en, tr;
     const idxSpaced = line.indexOf(' - ');
-    if(idxSpaced !== -1){ en = line.slice(0, idxSpaced).trim(); tr = line.slice(idxSpaced + 3).trim(); }
-    else{
+    if(idxSpaced !== -1){
+      en = line.slice(0, idxSpaced).trim();
+      tr = line.slice(idxSpaced + 3).trim();
+    }else{
       const idxPlain = line.indexOf('-');
       if(idxPlain === -1){ invalid.push(line); return; }
-      en = line.slice(0, idxPlain).trim(); tr = line.slice(idxPlain + 1).trim();
+      en = line.slice(0, idxPlain).trim();
+      tr = line.slice(idxPlain + 1).trim();
     }
     if(!en || !tr){ invalid.push(line); return; }
     parsed.push({ english: en, translation: tr });
   });
   return { parsed, invalid };
 }
+
 function updateBulkPreview(){
   const text = document.getElementById('bulkWordsText').value;
   const preview = document.getElementById('bulkPreview');
@@ -1087,24 +1020,29 @@ function updateBulkPreview(){
   if(invalid.length) msg += ` · не удалось разобрать строк: ${invalid.length}`;
   preview.textContent = msg;
 }
+
 function addBulkWords(){
   const block = parseInt(document.getElementById('bulkWordBlock').value, 10);
   const text = document.getElementById('bulkWordsText').value;
   const { parsed, invalid } = parseBulkWords(text);
-  if(parsed.length === 0){ showToast('Не найдено ни одного слова'); return; }
+  if(parsed.length === 0){
+    showToast('Не найдено ни одного слова в списке. Формат: слово - перевод');
+    return;
+  }
   parsed.forEach((item, i) => {
     const newId = 'w' + Date.now() + '_' + i;
     state.words.push({ id:newId, english:item.english, translation:item.translation, example:'', blockId:block, history:[] });
+    BLOCK_SIZES[block] = (BLOCK_SIZES[block]||0) + 1;
   });
-  recomputeBlockSizes();
   saveWords();
   document.getElementById('bulkWordsText').value = '';
   document.getElementById('bulkPreview').textContent = '';
-  closeBulkModal(); renderAll();
+  closeBulkModal();
+  renderAll();
   showToast(`Добавлено слов: ${parsed.length}` + (invalid.length ? `, пропущено строк: ${invalid.length}` : ''));
 }
 
-/* ---------- 11. UI ---------- */
+/* ---------- 11. ВСПОМОГАТЕЛЬНЫЕ UI-ФУНКЦИИ ---------- */
 let toastTimer;
 function showToast(msg){
   const t = document.getElementById('toast');
@@ -1127,7 +1065,8 @@ function applyTheme(){
 }
 function toggleTheme(){
   state.settings.theme = state.settings.theme === 'dark' ? 'light' : 'dark';
-  saveSettings(); applyTheme();
+  saveSettings();
+  applyTheme();
 }
 
 /* ---------- 13. КОНФЕТТИ ---------- */
@@ -1152,8 +1091,12 @@ function launchConfetti(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     particles.forEach(p=>{
       p.x += p.vx; p.y += p.vy; p.rot += p.vrot;
-      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot * Math.PI/180);
-      ctx.fillStyle = p.color; ctx.fillRect(-p.r/2, -p.r/2, p.r, p.r*1.6); ctx.restore();
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI/180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.r/2, -p.r/2, p.r, p.r*1.6);
+      ctx.restore();
     });
     if(frame < 160){ requestAnimationFrame(tick); }
     else{ ctx.clearRect(0,0,canvas.width,canvas.height); }
@@ -1161,14 +1104,17 @@ function launchConfetti(){
   tick();
 }
 
-/* ---------- 14. INIT ---------- */
+/* ---------- 14. ИНИЦИАЛИЗАЦИЯ И СЛУШАТЕЛИ ---------- */
 async function init(){
+  // Показываем индикатор, пока прогресс загружается из хранилища
   document.getElementById('mainArea').innerHTML = `
     <div class="empty-state">
       <div class="big">⏳</div>
       <h3>Загружаем прогресс…</h3>
     </div>`;
+
   attachEventListeners();
+
   await loadData();
   applyTheme();
   renderAll();
@@ -1177,8 +1123,11 @@ async function init(){
 function attachEventListeners(){
   document.getElementById('blockSelect').addEventListener('change', (e)=>{
     state.settings.currentBlock = parseInt(e.target.value, 10);
-    saveSettings(); state.round = null; renderAll();
+    saveSettings();
+    state.round = null;
+    renderAll();
   });
+
   document.getElementById('themeToggle').addEventListener('click', toggleTheme);
   document.getElementById('sidebarToggle').addEventListener('click', openSidebar);
   document.getElementById('sidebarClose').addEventListener('click', closeSidebar);
@@ -1207,7 +1156,8 @@ function attachEventListeners(){
   });
 
   document.getElementById('globalReviewBtn').addEventListener('click', ()=>{
-    startRound('globalReview'); closeSidebar();
+    startRound('globalReview');
+    closeSidebar();
   });
 
   document.getElementById('exportBtn').addEventListener('click', exportData);
@@ -1218,10 +1168,14 @@ function attachEventListeners(){
   });
 
   document.getElementById('resetBlockBtn').addEventListener('click', ()=>{
-    if(confirm(`Сбросить прогресс блока ${state.settings.currentBlock}?`)) resetBlockProgress(state.settings.currentBlock);
+    if(confirm(`Сбросить прогресс блока ${state.settings.currentBlock}?`)){
+      resetBlockProgress(state.settings.currentBlock);
+    }
   });
   document.getElementById('resetAllBtn').addEventListener('click', ()=>{
-    if(confirm('Сбросить ВЕСЬ прогресс? Это действие необратимо.')) resetAllProgress();
+    if(confirm('Сбросить ВЕСЬ прогресс по всем блокам? Это действие необратимо.')){
+      resetAllProgress();
+    }
   });
 
   window.addEventListener('resize', ()=>{
