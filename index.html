@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -446,7 +445,7 @@ select#blockSelect{
    Полностью автономное веб-приложение на чистом JS.
    ========================================================================= */
 
-/* ---------- 1. ИСХОДНЫЕ ДАННЫЕ: 18 блоков, 359 слов ---------- */
+/* ---------- 1. ИСХОДНЫЕ ДАННЫЕ: 5 блоков, 359 + 118 = 477 слов ---------- */
 // Формат: [номер блока, английское слово, перевод]
 const WORDS_RAW = [
 [1,"accomplish feats","совершать подвиги / достигать выдающихся результатов"],[1,"aid worker","сотрудник гуманитарной организации (помощи)"],[1,"applicant","соискатель / претендент (на должность)"],
@@ -476,10 +475,47 @@ const WORDS_RAW = [
 [4,"suffer a setback","потерпеть неудачу / столкнуться с препятствием"],[4,"take up a career / a hobby / a position / a post","начать карьеру / заняться хобби / занять должность"],[4,"throw yourself into","с головой погрузиться в (дело)"],
 [4,"tricks of the trade","профессиональные хитрости / секреты мастерства"],[4,"trustworthy","заслуживающий доверия / надёжный"],[4,"try your hand at something","попробовать свои силы в чём-либо (написать роман и т.п.)"],
 [4,"undertake a study / a survey / a task / an analysis / an investigation","предпринять исследование / опрос / задачу / анализ / расследование"],[4,"voice an opinion","высказать мнение (получить такую возможность)"],[4,"weigh up the consequences / the pros and cons","взвесить последствия / все за и против"],
-[4,"well-suited","хорошо подходящий (по характеру, способностям)"],[4,"work placement","производственная практика / временная стажировка"]
+[4,"well-suited","хорошо подходящий (по характеру, способностям)"],[4,"work placement","производственная практика / временная стажировка"],
+
+[5,"illustrate","иллюстрировать; показывать"],[5,"compare X in terms of Y","сравнивать X по показателю Y"],[5,"provide information on/about","предоставлять информацию о"],
+[5,"depict","изображать; показывать"],[5,"the figure for","показатель для"],[5,"the number of + countable noun","количество + исчисляемое существительное"],
+[5,"the amount of + uncountable noun","объём/количество + неисчисляемое существительное"],[5,"over the period from X to Y","за период с X по Y"],[5,"throughout the period","на протяжении всего периода"],
+[5,"Overall, ...","В целом, ..."],[5,"a key / main feature","ключевая / основная особенность"],[5,"in terms of","с точки зрения; по показателю"],
+[5,"respectively","соответственно"],[5,"whereas / while","тогда как"],[5,"in contrast / by contrast","в отличие от этого"],
+[5,"account for","составлять; приходиться на"],[5,"make up","составлять"],[5,"constitute","составлять; образовывать"],
+[5,"the proportion / percentage of","доля / процент"],[5,"the share of","доля"],[5,"a majority / a minority","большинство / меньшинство"],
+[5,"the remaining ...","оставшиеся ..."],[5,"a quarter / a third / two-thirds / three-quarters","четверть / треть / две трети / три четверти"],[5,"one in five","один из пяти; 20%"],
+[5,"approximately / roughly / around","приблизительно; около"],[5,"just over / just under","немногим больше / меньше"],[5,"almost / nearly","почти"],
+[5,"stand at","составлять; находиться на уровне"],[5,"a combined total of","совокупный показатель"],[5,"higher / lower than","выше / ниже, чем"],
+[5,"exceed","превышать"],[5,"outnumber","превосходить численно"],[5,"overtake","обгонять; превысить позднее"],
+[5,"twice as high as","в два раза выше, чем"],[5,"three times the figure for","в три раза больше показателя для"],[5,"half as high as","вдвое ниже; половина показателя"],
+[5,"more / fewer / the same number of","больше / меньше / столько же (исчисляемое)"],[5,"more / less / the same amount of","больше / меньше / столько же (неисчисляемое)"],[5,"by a margin of","с разницей в"],
+[5,"marginally / slightly","незначительно"],[5,"considerably / substantially","значительно"],[5,"similar / comparable","схожий / сопоставимый"],
+[5,"little / no significant difference between","небольшая / несущественная разница между"],[5,"a gap / disparity between","разрыв / различие между"],[5,"rank first / last","занимать первое / последнее место"],
+[5,"followed by","за которым следует"],[5,"compared with / to","по сравнению с"],[5,"rise / increase / grow","расти; увеличиваться"],
+[5,"climb","подняться; возрасти"],[5,"surge / soar","резко взлететь"],[5,"fall / decline / decrease","падать; снижаться"],
+[5,"drop / dip","снизиться / слегка снизиться"],[5,"plunge","резко упасть"],[5,"fluctuate","колебаться"],
+[5,"remain stable / unchanged","оставаться стабильным / неизменным"],[5,"level off / plateau","выровняться; выйти на плато"],[5,"peak at","достичь пика в"],
+[5,"hit / reach a low of","достичь минимума"],[5,"recover / rebound","восстановиться; отскочить"],[5,"an upward / downward trend","восходящая / нисходящая тенденция"],
+[5,"an increase / decrease of","увеличение / снижение на"],[5,"increase / fall by","увеличиться / снизиться на"],[5,"increase / fall to","увеличиться / снизиться до"],
+[5,"from X to Y","с X до Y"],[5,"double / triple / halve","удвоиться / утроиться / сократиться вдвое"],[5,"gradual / steady; gradually / steadily","постепенный / стабильный; постепенно"],
+[5,"sharp / rapid / steep; sharply / rapidly / steeply","резкий / быстрый; резко / быстро"],[5,"slight; slightly","незначительный; незначительно"],[5,"significant / considerable; significantly / considerably","значительный; значительно"],
+[5,"be projected / forecast / expected to","по прогнозам; ожидается, что"],[5,"by + deadline; in + year","к сроку; в конкретном году"],[5,"process / procedure / stage / cycle","процесс / процедура / этап / цикл"],
+[5,"begin / start / commence with","начинаться с"],[5,"be followed by","за этим следует"],[5,"after / following which","после чего"],
+[5,"once","после того как; как только"],[5,"simultaneously","одновременно"],[5,"be transported / transferred via","перевозиться / передаваться через"],
+[5,"be fed into / pass through","подаваться в / проходить через"],[5,"be mixed / combined / blended","смешиваться / соединяться"],[5,"be crushed / ground","дробиться / измельчаться"],
+[5,"be filtered / sifted / screened","фильтроваться / просеиваться"],[5,"be heated / cooled","нагреваться / охлаждаться"],[5,"be converted / transformed into","преобразоваться в"],
+[5,"undergo","проходить; подвергаться"],[5,"result in / produce / yield","приводить к / производить / давать результат"],[5,"finally / ultimately / the end product","наконец / в конечном итоге / конечный продукт"],
+[5,"be located / situated","располагаться"],[5,"lie to the north / south / east / west of","находиться к северу / югу / востоку / западу от"],[5,"northward / southward / eastward / westward","в направлении севера / юга / востока / запада"],
+[5,"adjacent to / next to","рядом с; непосредственно примыкать к"],[5,"opposite / across from","напротив"],[5,"near / in the vicinity of","рядом; в окрестности"],
+[5,"along","вдоль"],[5,"at the centre / on the outskirts","в центре / на окраине"],[5,"be surrounded by","быть окружённым"],
+[5,"be connected to ... via","быть соединённым с ... посредством"],[5,"be constructed / built","быть построенным"],[5,"be demolished / removed","быть снесённым / убранным"],
+[5,"be replaced by","быть заменённым на"],[5,"be converted into","быть переоборудованным / превращённым в"],[5,"be relocated","быть перенесённым"],
+[5,"expand / extend","расширяться / продлеваться"],[5,"be reduced in size","уменьшиться в размере"],[5,"remain unchanged / intact","остаться без изменений / нетронутым"],
+[5,"residential / industrial / commercial area","жилой / промышленный / коммерческий район"],[5,"facilities / transport infrastructure","объекты инфраструктуры / транспортная инфраструктура"]
 ];
 
-const TOTAL_BLOCKS = 4;
+const TOTAL_BLOCKS = 5;
 const BLOCK_SIZES = {}; // считаем размер каждого блока по факту
 WORDS_RAW.forEach(([b])=>{ BLOCK_SIZES[b]=(BLOCK_SIZES[b]||0)+1; });
 
