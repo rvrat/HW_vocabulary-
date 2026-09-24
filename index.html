@@ -365,7 +365,7 @@ select#blockSelect{
     <div class="field">
       <label>Слов в раунде: <span id="roundSizeLabel"></span></label>
       <div class="slider-row">
-        <input type="range" id="roundSizeSlider" min="5" max="30" value="10">
+        <input type="range" id="roundSizeSlider" min="5" max="107" value="10">
       </div>
     </div>
   </div>
@@ -703,7 +703,7 @@ function renderSidebar(){
 
   const maxBlockSize = Math.max(...Object.values(BLOCK_SIZES), 20);
   const slider = document.getElementById('roundSizeSlider');
-  slider.max = maxBlockSize;
+  slider.max = Math.max(maxBlockSize, 107); // <-- Разрешаем до 107 (или больше, если в блоке больше слов)
   slider.value = state.settings.roundSize;
   document.getElementById('roundSizeLabel').textContent = state.settings.roundSize;
 
